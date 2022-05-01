@@ -18,3 +18,7 @@ isort = "^5.10.1"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+make_next = 'dezero.utils.make_next:make_next_cli'
+delete_last = 'dezero.utils.make_next:delete_last_cli'

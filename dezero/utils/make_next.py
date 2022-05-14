@@ -20,6 +20,17 @@ def get_last(target_dir: Path):
     return last
 
 
+def touch_next(target_dir: Path):
+    last = get_last(target_dir)
+    last_num = int(last[4:6])
+    logger.info(f"Last file is {last_num}")
+
+    copy_to = target_dir / f"step{last_num+1:02d}.py"
+    open(copy_to, "a").close()
+
+    logger.info("touch next done :)")
+
+
 def make_next(target_dir: Path):
     last = get_last(target_dir)
 
@@ -62,5 +73,6 @@ def make_next_cli():
     make_next(target_dir)
 
 
-if __name__ == "__main__":
-    run()
+def touch_next_cli():
+    target_dir = get_target_dir()
+    touch_next(target_dir)

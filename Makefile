@@ -1,4 +1,4 @@
-.PHONY: next
+.PHONY: next delete touch
 
 ## make next
 next:
@@ -7,6 +7,10 @@ next:
 ## delete last
 delete:
 	delete_last
+
+## make empty next
+touch:
+	touch_next
 
 #################################################################################
 # Self Documenting Commands                                                     #

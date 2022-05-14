@@ -1,4 +1,4 @@
-.PHONY: next delete touch
+.PHONY: next delete touch dot
 
 ## make next
 next:
@@ -11,6 +11,10 @@ delete:
 ## make empty next
 touch:
 	touch_next
+
+## dot files
+dot:
+	dot sample.dot -T png -o sample.png
 
 #################################################################################
 # Self Documenting Commands                                                     #

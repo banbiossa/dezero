@@ -21,6 +21,6 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-make_next = 'dezero.utils.make_next:make_next_cli'
-delete_last = 'dezero.utils.make_next:delete_last_cli'
-touch_next = 'dezero.utils.make_next:touch_next_cli'
+make_next = 'dezero.cli.make_next:make_next_cli'
+delete_last = 'dezero.cli.make_next:delete_last_cli'
+touch_next = 'dezero.cli.make_next:touch_next_cli'

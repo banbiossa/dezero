@@ -1,7 +1,7 @@
-.PHONY: next delete touch dot
+.PHONY: _next_ next delete dot
 
 ## make next
-next:
+_next_:
 	make_next
 
 ## delete last
@@ -9,7 +9,7 @@ delete:
 	delete_last
 
 ## make empty next
-touch:
+next:
 	touch_next
 
 ## dot files

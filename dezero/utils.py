@@ -67,17 +67,6 @@ def get_dot_graph(output: Variable, verbose: bool = True):
     return "digraph g{" + txt + "}"
 
 
-import numpy as np
-
-x = Variable(np.random.randn(2, 3))
-x.name = "x"
-print(_dot_var(x))
-print(_dot_var(x, verbose=True))
-
-y = x + 1.0
-txt = _dot_func(y.creator)
-print(txt)
-
 # =============================================================================
 # Utility functions for numpy (numpy magic)
 # =============================================================================

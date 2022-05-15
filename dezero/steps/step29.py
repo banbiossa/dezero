@@ -20,4 +20,9 @@ for i in range(iters):
     x.cleargrad()
     y.backward()
 
-    x.data -= x.grad / gx2(x.data)
+    # diff = x.grad / gx2(x.data)
+    diff = x.grad / gx2(x)
+    # x.data = x.data - diff
+    x = x - diff
+
+    # x.data -= x.grad / gx2(x.data)

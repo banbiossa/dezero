@@ -6,6 +6,8 @@ from abc import ABC, abstractmethod
 
 import numpy as np
 
+import dezero
+
 
 class Config:
     enable_backprop = True
@@ -19,12 +21,6 @@ def using_config(name, value):
         yield
     finally:
         setattr(Config, name, old_value)
-
-
-def as_variable(obj):
-    if isinstance(obj, Variable):
-        return obj
-    return Variable(obj)
 
 
 class Variable:
@@ -94,6 +90,21 @@ class Variable:
     def __pow__(self, power):
         return pow(self, power)
 
+    def sum(self, axis=None, keepdims=False):
+        return dezero.functions.sum(self, axis, keepdims)
+
+    def transpose(self):
+        return dezero.functions.transpose(self)
+
+    @property
+    def T(self):
+        return dezero.functions.transpose(self)
+
+    def reshape(self, *shape):
+        if len(shape) == 1 and isinstance(shape[0], (tuple, list)):
+            shape = shape[0]
+        return dezero.functions.reshape(self, shape)
+
     def cleargrad(self):
         self.grad = None
 
@@ -129,7 +140,7 @@ class Variable:
                     if x.grad is None:
                         x.grad = gx
                     else:
-                        x.grad += gx
+                        x.grad = x.grad + gx
                     if x.creator is not None:
                         add_func(x.creator)
 
@@ -142,6 +153,12 @@ def as_array(x):
     if np.isscalar(x):
         return np.array(x)
     return x
+
+
+def as_variable(obj):
+    if isinstance(obj, Variable):
+        return obj
+    return Variable(obj)
 
 
 class Function(ABC):

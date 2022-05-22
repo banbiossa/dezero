@@ -6,6 +6,8 @@ from abc import ABC, abstractmethod
 
 import numpy as np
 
+import dezero
+
 
 class Config:
     enable_backprop = True
@@ -48,6 +50,9 @@ class Variable:
     @property
     def dtype(self):
         return self.data.dtype
+
+    def __getitem__(self, indices):
+        return dezero.functions.get_item(self, indices)
 
     def __len__(self):
         return len(self.data)
@@ -351,3 +356,7 @@ with using_config("enable_backprop", False):
 with no_grad():
     x = Variable(np.array(2.0))
     y = square(x)
+
+
+class Parameter(Variable):
+    pass

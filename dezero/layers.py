@@ -10,6 +10,14 @@ from dezero.core import Parameter
 class Layer:
     def __init__(self):
         self._params = set()
+    
+    def to_cpu(self):
+        for param in self.params():
+            param.to_cpu()
+    
+    def to_gpu(self)
+        for param in self.params():
+            param.to_gpu()
 
     def __setattr__(self, key, value):
         if isinstance(value, (Parameter, Layer)):

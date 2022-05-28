@@ -1,4 +1,5 @@
 from __future__ import annotations
+from array import array
 
 import contextlib
 import weakref
@@ -7,6 +8,14 @@ from abc import ABC, abstractmethod
 import numpy as np
 
 import dezero
+import dezero.cuda
+
+try:
+    import cupy
+
+    array_types = (np.ndarray, cupy.ndarray)
+except ImportError:
+    array_types = (np.ndarray,)
 
 
 class Config:
@@ -27,7 +36,7 @@ class Variable:
     __array_priority__ = 200
 
     def __init__(self, data: np.ndarray, name: str = None) -> None:
-        if data is not None and not isinstance(data, np.ndarray):
+        if data is not None and not isinstance(data, array_types):
             raise TypeError(f"{type(data)} not supported, only np.ndarray")
         self.data = data
         self.name = name
@@ -123,9 +132,18 @@ class Variable:
         self.creator = func
         self.generation = func.generation + 1
 
+    def to_cpu(self):
+        if self.data is not None:
+            self.data = dezero.cuda.as_numpy(self.data)
+
+    def to_gpu(self):
+        if self.data is not None:
+            self.data = dezero.cuda.as_cupy(self.data)
+
     def backward(self, retain_grad=False, create_graph=False) -> None:
         if self.grad is None:
-            self.grad = Variable(np.ones_like(self.data))
+            xp = dezero.cuda.get_array_module(self.data)
+            self.grad = Variable(xp.ones_like(self.data))
 
         funcs = []
         seen_set = set()

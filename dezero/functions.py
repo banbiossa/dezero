@@ -5,10 +5,13 @@ import numpy as np
 from dezero import utils
 from dezero.core import Function, Variable, as_array, as_variable
 
+from dezero import cuda
+
 
 class Sin(Function):
     def forward(self, x: np.ndarray):
-        return np.sin(x)
+        xp = cuda.get_array_module(x)
+        return xp.sin(x)
 
     def backward(self, gy: Variable):
         (x,) = self.inputs

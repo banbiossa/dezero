@@ -1,0 +1,13 @@
+name: dezero 
+dependencies:
+  - python=3.7
+  - numpy=*
+  - matplotlib=*
+  - Pillow=*
+  - scipy=*
+  - seaborn=*
+  - pandas=*
+  - cupy=*
+  - pytest=*
+  - black=*
+  - isort=*

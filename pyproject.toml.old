@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "dezero"
+version = "0.1.0"
+description = ""
+authors = ["Shota Shimizu <shota_shimizu@caddi.jp>"]
+
+[tool.poetry.dependencies]
+python = ">=3.7,<3.11"
+numpy = "*"
+matplotlib = "*"
+Pillow = "*"
+scipy = "*"
+seaborn = "*"
+pandas = "*"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+black = "^22.3.0"
+isort = "^5.10.1"
+memory-profiler = "^0.60.0"
+jupyterlab = "^3.4.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+make_next = 'dezero.cli.make_next:make_next_cli'
+delete_last = 'dezero.cli.make_next:delete_last_cli'
+touch_next = 'dezero.cli.make_next:touch_next_cli'

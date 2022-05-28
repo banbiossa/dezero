@@ -300,7 +300,7 @@ class CIFAR100(CIFAR10):
             )
         )
         fine_labels = []
-        return fine_labels if label_type is "fine" else coarse_labels
+        return fine_labels if label_type == "fine" else coarse_labels
 
 
 # =============================================================================

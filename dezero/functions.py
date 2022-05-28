@@ -3,7 +3,7 @@ from typing import Tuple
 import numpy as np
 
 from dezero import utils
-from dezero.core import Function, Variable, as_variable
+from dezero.core import Function, Variable, as_array, as_variable
 
 
 class Sin(Function):
@@ -362,8 +362,8 @@ class SoftmaxCrossEntropy(Function):
         return y
 
 
-def softmax_cross_entropy(x, t):
-    return SoftmaxCrossEntropy()(x, t)
+def softmax_cross_entropy(y, t):
+    return SoftmaxCrossEntropy()(y, t)
 
 
 class Clip(Function):
@@ -384,3 +384,29 @@ class Clip(Function):
 
 def clip(x, x_min, x_max):
     return Clip(x_min, x_max)(x)
+
+
+def accuracy(y, t):
+    y, t = as_variable(y), as_variable(t)
+
+    pred = y.data.argmax(axis=1).reshape(t.shape)
+    result = pred == t.data
+    acc = result.mean()
+
+    return Variable(as_array(acc))
+
+
+class ReLU(Function):
+    def forward(self, x: np.ndarray) -> tuple:
+        y = np.maximum(x, 0.0)
+        return y
+
+    def backward(self, gy: Variable) -> tuple:
+        (x,) = self.inputs
+        mask = x.data > 0
+        gx = gy * mask
+        return gx
+
+
+def relu(x):
+    return ReLU()(x)

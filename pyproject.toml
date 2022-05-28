@@ -5,10 +5,12 @@ description = ""
 authors = ["Shota Shimizu <shota_shimizu@caddi.jp>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = ">=3.9,<3.11"
 numpy = "^1.22.3"
 matplotlib = "^3.5.1"
 Pillow = "^9.1.0"
+scipy = "^1.8.1"
+seaborn = "*"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

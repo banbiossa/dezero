@@ -1,5 +1,33 @@
-.PHONY: _next_ next delete dot
+.PHONY: _next_ next delete dot instance ssh stop
 
+##symotion-prefix) create instance
+instance:
+	gcloud compute instances create ${INSTANCE_NAME} \
+	  --zone=${ZONE} \
+	  --image-family="common-cu113" \
+	  --image-project=deeplearning-platform-release \
+	  --maintenance-policy=TERMINATE \
+	  --accelerator="type=nvidia-tesla-a100,count=1" \
+	  --metadata="install-nvidia-driver=True" \
+	  --boot-disk-type="pd-standard" \
+	  --boot-disk-size="200GB" \
+	  --machine-type="a2-highgpu-1g" \
+	  --preemptible \
+	  --service-account="vertex-ai@ai-lab-sandbox.iam.gserviceaccount.com" \
+	  --network="outbound-internet" \
+	  --subnet="subnet1"
+
+## scp
+scp:
+	gcloud compute scp --recurse ./ ${INSTANCE_NAME}:~/dezero
+
+## ssh
+ssh:
+	gcloud beta compute ssh --zone ${ZONE} ${INSTANCE_NAME} --project ${PROJECT_ID}
+
+## stop
+stop:
+	gcloud compute instances stop ${INSTANCE_NAME} --zone ${ZONE}
 ## make next
 _next_:
 	make_next
@@ -15,6 +43,7 @@ next:
 ## dot files
 dot:
 	dot sample.dot -T png -o sample.png
+
 
 #################################################################################
 # Self Documenting Commands                                                     #

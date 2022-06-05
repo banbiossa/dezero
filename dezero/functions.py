@@ -425,13 +425,6 @@ def dropout(x, dropout_ratio=0.5):
 
 
 from dezero.core import add, div, mul, neg, pow, rsub, sub
-from dezero.functions_conv import (
-    average_pooling,
-    col2im,
-    conv2d,
-    conv2d_simple,
-    deconv2d,
-    im2col,
-    pooling,
-    pooling_simple,
-)
+from dezero.functions_conv import (average_pooling, col2im, conv2d,
+                                   conv2d_simple, deconv2d, im2col, pooling,
+                                   pooling_simple)

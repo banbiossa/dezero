@@ -103,10 +103,15 @@ class Variable:
 
         return dezero.functions.sum(self, axis, keepdims)
 
-    def transpose(self):
+    def transpose(self, *axes):
         import dezero.functions
 
-        return dezero.functions.transpose(self)
+        if len(axes) == 0:
+            axes = None
+        elif len(axes) == 1:
+            if isinstance(axes[0], (tuple, list)) or axes[0] is None:
+                axes = axes[0]
+        return dezero.functions.transpose(self, axes)
 
     @property
     def T(self):

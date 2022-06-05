@@ -210,8 +210,8 @@ class MeanSquaredError(Function):
         return gx0, gx1
 
 
-def mean_squared_error(x0, x1):
-    return MeanSquaredError()(x0, x1)
+def mean_squared_error(y, t):
+    return MeanSquaredError()(y, t)
 
 
 def linear_simple(x, W, b=None):
@@ -425,6 +425,13 @@ def dropout(x, dropout_ratio=0.5):
 
 
 from dezero.core import add, div, mul, neg, pow, rsub, sub
-from dezero.functions_conv import (average_pooling, col2im, conv2d,
-                                   conv2d_simple, deconv2d, im2col, pooling,
-                                   pooling_simple)
+from dezero.functions_conv import (
+    average_pooling,
+    col2im,
+    conv2d,
+    conv2d_simple,
+    deconv2d,
+    im2col,
+    pooling,
+    pooling_simple,
+)

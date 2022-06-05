@@ -3,7 +3,7 @@ from typing import Tuple
 import numpy as np
 
 from dezero import utils
-from dezero.core import Function, Variable, as_array, as_variable
+from dezero.core import Config, Function, Variable, as_array, as_variable
 
 
 class Sin(Function):
@@ -410,3 +410,28 @@ class ReLU(Function):
 
 def relu(x):
     return ReLU()(x)
+
+
+def dropout(x, dropout_ratio=0.5):
+    x = as_variable(x)
+
+    if Config.train:
+        mask = np.random.rand(*x.shape) > dropout_ratio
+        scale = np.array(1.0 - dropout_ratio).astype(x.dtype)
+        y = x * mask / scale
+        return y
+    else:
+        return x
+
+
+from dezero.core import add, div, mul, neg, pow, rsub, sub
+from dezero.functions_conv import (
+    average_pooling,
+    col2im,
+    conv2d,
+    conv2d_simple,
+    deconv2d,
+    im2col,
+    pooling,
+    pooling_simple,
+)

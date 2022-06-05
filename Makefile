@@ -1,6 +1,6 @@
 .PHONY: _next_ next delete dot instance ssh stop
 
-##symotion-prefix) create instance
+## create instance
 instance:
 	gcloud compute instances create ${INSTANCE_NAME} \
 	  --zone=${ZONE} \
@@ -19,7 +19,12 @@ instance:
 
 ## scp
 scp:
-	gcloud compute scp --recurse ./ ${INSTANCE_NAME}:~/dezero
+	gcloud compute scp --recurse --zone=${ZONE} ./* ${INSTANCE_NAME}:~/dezero
+
+## scp
+scp-git:
+	gcloud compute scp --recurse --zone=${ZONE} ./.gitignore ${INSTANCE_NAME}:~/dezero
+
 
 ## ssh
 ssh:
@@ -28,6 +33,11 @@ ssh:
 ## stop
 stop:
 	gcloud compute instances stop ${INSTANCE_NAME} --zone ${ZONE}
+
+## delete
+delete-instance:
+	gcloud compute instances delete ${INSTANCE_NAME} --zone ${ZONE}
+
 ## make next
 _next_:
 	make_next
